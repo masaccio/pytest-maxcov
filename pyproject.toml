@@ -6,7 +6,7 @@ documentation = "https://github.com/masaccio/pytest-maxcov/blob/main/README.md"
 authors = ["Jon Connell <python@figsandfudge.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "pytest_maxcov" from="src"}]
+packages = [{include = "pytest_maxcov", from="src"}]
 classifiers = [
   "Framework :: Pytest",
   "Programming Language :: Python :: 3",
@@ -32,7 +32,7 @@ branch = true
 directory = "coverage_html_report"
 
 [tool.pytest.ini_options]
-addopts = "--cov=src/numbers_parser --cov-report=term-missing:skip-covered"
+addopts = "--cov=src/pytest_maxcov --cov-report=term-missing:skip-covered"
 
 [tool.tox]
 legacy_tox_ini = """
