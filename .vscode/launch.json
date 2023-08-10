@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Python: Debug Tests",
             "type": "python",
@@ -19,6 +20,7 @@
             "console": "integratedTerminal",
             "env": {"PYTEST_ADDOPTS": "--no-cov"}, 
             "justMyCode": true,
+            "cwd": "${workspace}/../numbers-parser",
             "args": [
                 "${file}"
             ]
