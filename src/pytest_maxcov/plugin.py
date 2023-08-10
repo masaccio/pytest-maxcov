@@ -1,3 +1,4 @@
+import os
 import re
 from collections import namedtuple
 from typing import List, Set, Union
@@ -47,6 +48,7 @@ with open("duration.txt") as fh:
 
 universe = set()
 data = CoverageData(".coverage")
+root_dir = os.path.dirname(data.base_filename()) + "/"
 data.read()
 subsets = []
 for context in data.measured_contexts():
@@ -56,13 +58,13 @@ for context in data.measured_contexts():
     context_func = re.sub(r"[\[\|].*", "", context)
     if data.has_arcs():
         arcs = [
-            [f"{filename}:{arc}" for arc in data.arcs(filename)]
+            [f"{filename.replace(root_dir,'')}:{arc}" for arc in data.arcs(filename)]
             for filename in data.measured_files()
         ]
         subset = set(e for s in arcs for e in s)
     else:
         lines = [
-            [f"{filename}:{line}" for line in data.lines(filename)]
+            [f"{filename.replace(root_dir,'')}:{line}" for line in data.lines(filename)]
             for filename in data.measured_files()
         ]
         subset = set(e for s in lines for e in s)
