@@ -38,7 +38,7 @@ branch = true
 directory = "coverage_html_report"
 
 [tool.pytest.ini_options]
-norecursedirs = "tests/dut/*"
+norecursedirs = "dut/*"
 addopts = "--cov=src/pytest_maxcov --cov-report=term-missing:skip-covered"
 
 [tool.tox]
