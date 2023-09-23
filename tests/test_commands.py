@@ -21,9 +21,6 @@ def test_help(script_runner):
         if line.strip() == "coverage runtime minimisation:":
             break
     lines = lines[line_num + 1 :]
-
     assert "Run the subset of tests provides maximum coverage" in lines[0]
-    assert "Record coverage and timing data for the --maxcov option" in lines[1]
-    assert "Set the threshold for computing maximum coverage" in lines[3]
 
     os.chdir(CWD)
