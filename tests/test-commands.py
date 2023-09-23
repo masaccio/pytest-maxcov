@@ -1,24 +1,29 @@
+sys.path = ["."] + sys.path
+CWD = os.getcwd()
+print(">>>", sys.path, "<<<")
+
 import pytest
+import os
+import sys
 
 
-def pytest_addoption(parser):
-    group = parser.getgroup("helloworld")
-    group.addoption(
-        "--name",
-        action="store",
-        dest="name",
-        default="World",
-        help='Default "name" for hello().',
-    )
+@pytest.mark.script_launch_mode("subprocess")
+def test_help(script_runner):
+    os.chdir("tests/dut")
 
+    ret = script_runner.run(["pytest", "--help", "-p", "pytest_maxcov"], print_result=False)
+    assert ret.stderr == ""
+    assert ret.success
 
-@pytest.fixture
-def hello(request):
-    name = request.config.getoption("name")
+    assert "coverage runtime minimisation" in ret.stdout
 
-    def _hello(name=None):
-        if not name:
-            name = request.config.getoption("name")
-        return "Hello {name}!".format(name=name)
+    for line in ret.stdout.split("\r\n"):
+        if line.strip() == "coverage runtime minimisation":
+            break
 
-    return _hello
+    lines = [x.strip() for x in ret.stdout.split("\r\n")]
+    assert "Run the subset of tests provides maximum coverage" in lines[0]
+    assert "Record coverage and timing data for the --maxcov option" in lines[1]
+    assert "Set the threshold for computing maximum coverage. Default: 100.0" in lines[2]
+
+    os.chdir(CWD)
