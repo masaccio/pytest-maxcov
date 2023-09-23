@@ -25,6 +25,7 @@ pylama = "^8.4.1"
 pytest = "^7.4.2"
 pytest-cov = "^4.1.0"
 pytest-xdist = "^3.3.1"
+pytest-console-scripts = "^1.4.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -37,6 +38,7 @@ branch = true
 directory = "coverage_html_report"
 
 [tool.pytest.ini_options]
+norecursedirs = "tests/dut/*"
 addopts = "--cov=src/pytest_maxcov --cov-report=term-missing:skip-covered"
 
 [tool.tox]
