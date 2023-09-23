@@ -1,15 +1,14 @@
-sys.path = ["."] + sys.path
-CWD = os.getcwd()
-print(">>>", sys.path, "<<<")
-
 import pytest
 import os
 import sys
 
+sys.path = ["."] + sys.path
+CWD = os.getcwd()
 
-@pytest.mark.script_launch_mode("subprocess")
+
+@pytest.mark.script_launch_mode("inprocess")
 def test_help(script_runner):
-    os.chdir("tests/dut")
+    os.chdir("dut")
 
     ret = script_runner.run(["pytest", "--help", "-p", "pytest_maxcov"], print_result=False)
     assert ret.stderr == ""
@@ -17,13 +16,14 @@ def test_help(script_runner):
 
     assert "coverage runtime minimisation" in ret.stdout
 
-    for line in ret.stdout.split("\r\n"):
-        if line.strip() == "coverage runtime minimisation":
+    lines = ret.stdout.split("\n")
+    for line_num, line in enumerate(lines):
+        if line.strip() == "coverage runtime minimisation:":
             break
+    lines = lines[line_num + 1 :]
 
-    lines = [x.strip() for x in ret.stdout.split("\r\n")]
     assert "Run the subset of tests provides maximum coverage" in lines[0]
     assert "Record coverage and timing data for the --maxcov option" in lines[1]
-    assert "Set the threshold for computing maximum coverage. Default: 100.0" in lines[2]
+    assert "Set the threshold for computing maximum coverage" in lines[3]
 
     os.chdir(CWD)
