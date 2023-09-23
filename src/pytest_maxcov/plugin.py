@@ -10,7 +10,8 @@ from coverage import CoverageData
 
 
 def pytest_addoption(parser):
-    parser.addoption(
+    group = parser.getgroup("coverage runtime minimisation")
+    group.addoption(
         "--maxcov",
         action="store_true",
         default=False,
@@ -19,16 +20,17 @@ def pytest_addoption(parser):
             "execution time. Requires a previous pytest run using --maxcov-record"
         ),
     )
-    parser.addoption(
+    group.addoption(
         "--maxcov-record",
         action="store_true",
         default=False,
         help="Record coverage and timing data for the --maxcov option",
     )
-    parser.addoption(
+    group.addoption(
         "--maxcov-threshold",
         type=float,
         default=100.0,
+        metavar="PERCENT",
         help="Set the threshold for computing maximum coverage. Default: 100.0",
     )
 
