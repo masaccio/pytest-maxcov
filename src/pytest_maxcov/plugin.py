@@ -88,11 +88,6 @@ class MaxCovPlugin:
         universe = set()
         subsets = []
         for context, hits in coverage.items():
-            # if context_func in costs:
-            #     cost = costs[context_func]
-            # else:
-            #     cost = 0.001
-
             subset = set(hits.split("|"))
             universe |= subset
             subsets.append(Subset(set=subset, cost=costs[context], context=context))
@@ -101,7 +96,9 @@ class MaxCovPlugin:
         maxcov_contexts = [x.context for x in cover_subsets]
 
         skip_maxcov = pytest.mark.skip(reason="excluded by --maxcov")
-        maxcov_contexts = set_cover(universe, subsets, config.option.maxcov_threshold / 100)
+        maxcov_subsets = set_cover(universe, subsets, config.option.maxcov_threshold / 100)
+        maxcov_contexts = [x.context for x in maxcov_subsets]
+
         for item in items:
             if item.nodeid not in maxcov_contexts:
                 item.add_marker(skip_maxcov)
