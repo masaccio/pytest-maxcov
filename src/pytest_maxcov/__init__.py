@@ -1,3 +1,5 @@
-import importlib.metadata
+# import importlib.metadata
 
-__version__ = importlib.metadata.version("pytest-maxcov")
+# __version__ = importlib.metadata.version("pytest-maxcov")
+
+pytest_plugins = ["pytest_maxcov.plugin"]
