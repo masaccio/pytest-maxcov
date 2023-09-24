@@ -7,8 +7,8 @@ CWD = os.getcwd()
 
 
 @pytest.mark.script_launch_mode("subprocess")
-def test_help(script_runner, tmpdir_test_env):
-    ret = script_runner.run(["pytest", "--help", "-p", "pytest_maxcov"], print_result=False)
+def test_command_line(script_runner, tmpdir_test_env):
+    ret = script_runner.run(["pytest", "--help"], print_result=False)
     assert ret.stderr == ""
     assert ret.success
 
@@ -22,16 +22,16 @@ def test_help(script_runner, tmpdir_test_env):
     assert "Run the subset of tests provides maximum coverage" in lines[0]
 
 
-@pytest.mark.script_launch_mode("inprocess")
-def test_threshold_errors(script_runner, tmpdir_test_env):
-    ret = script_runner.run(
-        ["pytest", "-p", "pytest_maxcov", "--maxcov-threshold=0.0"], print_result=False
-    )
+@pytest.mark.script_launch_mode("subprocess")
+def test_command_line_errors(script_runner, tmpdir_test_env):
+    ret = script_runner.run(["pytest", "--maxcov-threshold=0.0"], print_result=False)
     assert "--maxcov-threshold must be >0.0 and <=100.0" in ret.stderr
     assert not ret.success
 
-    ret = script_runner.run(
-        ["pytest", "-p", "pytest_maxcov", "--maxcov-threshold=101"], print_result=False
-    )
+    ret = script_runner.run(["pytest", "--maxcov-threshold=101"], print_result=False)
     assert "--maxcov-threshold must be >0.0 and <=100.0" in ret.stderr
+    assert not ret.success
+
+    ret = script_runner.run(["pytest", "--maxcov", "--no-cov"], print_result=False)
+    assert "disabled with --no-cov" in ret.stderr
     assert not ret.success
