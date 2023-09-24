@@ -1,5 +1,7 @@
 # Overview
 
+**THIS PLUGIN IS IN DEVELOPMENT -- Expect bugs. Expect incomplete behaviour**
+
 `pytest-maxcov` is a [pytest](https://pypi.org/project/pytest/) plugin to compute the maximum coverage available through pytest with the minimum execution time cost. The plugin serves two main use cases:
 
 * to identify redundant unit tests which do not add additional coverage
