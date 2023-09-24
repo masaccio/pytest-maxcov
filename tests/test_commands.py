@@ -23,3 +23,7 @@ def test_command_line_errors(script_runner, tmpdir_test_env):
     ret = script_runner.run(["pytest", "--maxcov", "--no-cov"], print_result=False)
     assert "disabled with --no-cov" in ret.stderr
     assert not ret.success
+
+    ret = script_runner.run(["pytest", "--maxcov-record"], print_result=False)
+    assert "pytest-maxcov requires --cov_context=test" in ret.stderr
+    assert not ret.success

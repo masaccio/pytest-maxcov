@@ -70,6 +70,8 @@ class MaxCovPlugin:
             raise pytest.UsageError("pytest-maxcov uses pytest-cov which is not enabled")
         if self.config.option.no_cov:
             raise pytest.UsageError("pytest-maxcov uses coverage which is disabled with --no-cov")
+        if self.config.option.maxcov_record and not self.config.option.cov_context:
+            raise pytest.UsageError("pytest-maxcov requires --cov_context=test")
 
     def pytest_collection_modifyitems(
         self, session: pytest.Session, config: pytest.Config, items: List[pytest.Item]
