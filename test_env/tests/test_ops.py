@@ -13,6 +13,18 @@ def test_sub():
     assert Sub().sub() == -10
 
 
+def test_add_1():
+    assert Add().add(double=False) == 30
+
+
+def test_mul_1():
+    assert Mul().mul(double=False) == 200
+
+
+def test_sub_1():
+    assert Sub().sub(double=False) == -10
+
+
 def test_add_2():
     assert Add().add(double=True) == 60
 
