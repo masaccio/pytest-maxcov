@@ -17,10 +17,17 @@ python3 -m pip install pytest-maxcov
 
 The plugin works in two passes:
 
-1. Run alongside `pytest-cov` to collect coverage information and time every test. Pass `--maxcov-record` on the command-line to `pytest` to configure the plugin to capture the data it needs for the second pass.
+1. Run alongside `pytest-cov` to collect coverage information and time every test. Pass `--maxcov-record` on the command-line to `pytest` to configure the plugin to capture the data it needs for the second pass. You must also include `--cov-context=text` to that per-test coverage can be measured.
 2. Run using `--maxcov` to read the data from pass one to mark tests as skipped if they are not needed to achieve the chosen coverage level.
 
 The command-line option `--maxcov-threshold` specifies the threshold for computing the minimum set of tests. By default this is 100%.
+
+For example using Poetry and [pytest-xdist](https://pypi.org/project/pytest-xdist/):
+
+``` text
+poetry run pytest -n logical --maxcov-record --cov=mypackage --cov-branch --cov-context=test
+poetry run pytest -n logical --maxcov --cov=mypackage --cov-branch
+```
 
 ## Limitations
 
