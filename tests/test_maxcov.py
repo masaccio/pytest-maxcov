@@ -5,7 +5,7 @@ import os
 @pytest.mark.script_launch_mode("subprocess")
 def test_two_pass(script_runner, tmpdir_test_env):
     ret = script_runner.run(
-        ["python3", "-m", "pytest", "--maxcov-record"],
+        ["python3", "-m", "pytest", "--maxcov-record", "--cov-context=test"],
         print_result=False,
     )
     assert ret.stderr == ""
