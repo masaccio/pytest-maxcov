@@ -11,5 +11,8 @@ class Sub:
     def b(self):
         return self._b
 
-    def sub(self):
-        return self.a - self.b
+    def sub(self, double=False):
+        if double:
+            return (self.a - self.b) * 2
+        else:
+            return self.a - self.b

@@ -11,5 +11,8 @@ class Add:
     def b(self):
         return self._b
 
-    def add(self):
-        return self.a + self.b
+    def add(self, double=False):
+        if double:
+            return (self.a + self.b) * 2
+        else:
+            return self.a + self.b

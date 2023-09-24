@@ -11,5 +11,8 @@ class Mul:
     def b(self):
         return self._b
 
-    def mul(self):
-        return self.a * self.b
+    def mul(self, double=False):
+        if double:
+            return (self.a * self.b) * 2
+        else:
+            return self.a * self.b
