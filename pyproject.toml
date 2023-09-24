@@ -9,9 +9,19 @@ readme = "README.md"
 packages = [{include = "pytest_maxcov", from="src"}]
 classifiers = [
   "Framework :: Pytest",
-  "Programming Language :: Python :: 3",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
 ]
+
+[tool.poetry.plugins.pytest11]
+pytest-maxcov = "pytest_maxcov.plugin"
+
 
 [tool.poetry.dependencies]
 python = "^3.8"
