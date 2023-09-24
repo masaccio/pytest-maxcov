@@ -49,7 +49,7 @@ directory = "coverage_html_report"
 
 [tool.pytest.ini_options]
 norecursedirs = "test_env/*"
-addopts = "--cov=src/pytest_maxcov --cov-report=term-missing:skip-covered"
+addopts = "--cov=src/pytest_maxcov --cov-report=term-missing:skip-covered --cov-report=html"
 
 [tool.tox]
 legacy_tox_ini = """
