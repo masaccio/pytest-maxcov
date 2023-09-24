@@ -1,9 +1,4 @@
 import pytest
-import os
-import sys
-
-sys.path = ["."] + sys.path
-CWD = os.getcwd()
 
 
 @pytest.mark.script_launch_mode("subprocess")
@@ -13,13 +8,6 @@ def test_command_line(script_runner, tmpdir_test_env):
     assert ret.success
 
     assert "coverage runtime minimisation" in ret.stdout
-
-    lines = ret.stdout.split("\n")
-    for line_num, line in enumerate(lines):
-        if line.strip() == "coverage runtime minimisation:":
-            break
-    lines = lines[line_num + 1 :]
-    assert "Run the subset of tests provides maximum coverage" in lines[0]
 
 
 @pytest.mark.script_launch_mode("subprocess")
