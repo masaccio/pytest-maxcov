@@ -4,6 +4,7 @@ from collections import defaultdict, namedtuple
 from enum import StrEnum
 from time import time
 from typing import Dict, List, Optional, Set, Tuple, Union
+from warnings import warn
 
 import pytest
 from coverage import CoverageData
@@ -73,11 +74,13 @@ class MaxCovPlugin:
     def pytest_collection_modifyitems(
         self, session: pytest.Session, config: pytest.Config, items: List[pytest.Item]
     ) -> None:
-        print("\n***pytest_collection_modifyitems")
         if not config.option.maxcov:
             return
 
         (costs, coverage) = self.read_cache()
+        if len(coverage) == 0:
+            warn(pytest.PytestWarning("No coverage data available: --maxcov aborted"))
+            return
 
         collected_nodeids = set([x.nodeid for x in items])
         cached_nodeids = set(costs.keys())
@@ -167,8 +170,8 @@ def coverage_data() -> Dict[str, str]:
     else:
         data = CoverageData(".coverage")
 
-    root_dir = os.path.dirname(data.base_filename()) + "/"
     data.read()
+    root_dir = os.path.dirname(data.base_filename()) + "/"
     coverage_data = {}
     for context in data.measured_contexts():
         if not context:
